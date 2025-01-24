@@ -8,7 +8,8 @@ public class JobAssignmentFinder {
     private int[][] benefitMatrix;
     private int length;
     private String matrixString;
-    
+    private final ArrayList<Integer> thisList = new ArrayList<>();
+
     public JobAssignmentFinder(){
         this.length = -1;
         this.matrixString = "";
@@ -57,17 +58,34 @@ public class JobAssignmentFinder {
     }
 
     public ArrayList<Integer>getMaxAssignment(){
-        ArrayList<Integer> thisList = new ArrayList<>();
+        for(int i = 0; i < length; i++){
+            int max = benefitMatrix[i][0];
+            int index = 0;
+            for(int j = 1 ; j <length; j++){
+                if(max < benefitMatrix[i][j]){
+                    if(!thisList.contains(j)){
+                        max = benefitMatrix[i][j];
+                        index = j;
+                    }
+                }
+            }
+            thisList.add(max);
+
+        }
 
         return thisList;
     }
 
     public int getMaxAssignmentTotalValue(){
-        return 0;
+        int totalvalue = 0;
+        for(int i = 0 ; i < thisList.size() ; i ++){
+            totalvalue += thisList.get(i);
+        }
+        return totalvalue;
     }
     
     public int getBenefit(int x,int y){
-        return 0;
+        return benefitMatrix[x][y];
     }
 
 
